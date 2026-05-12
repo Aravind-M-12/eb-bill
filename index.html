@@ -1,107 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aravind</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aravind</title>
+
 <style>
-     *{
-            margin: 0;
-            padding: 0;
-        }
-
-    .image{
-       display: flex;
-       justify-content: center;
-    }
-
-    .contact form {
-  max-width: 400px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.contact input, 
-.contact textarea {
-  margin-bottom: 10px;
-  padding: 10px;
+body{
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.contact button {
-  padding: 10px;
-  background: rgb(172, 39, 233);
-  border: none;
-  color: white;
-  cursor: pointer;
+.image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
-.contact button:hover{
-  background: rgb(31, 208, 221);
+.image img{
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
 }
 
-.radio1{
-  margin-top: 138.4px;
-  margin-left: 150px;
+/* white box */
+.box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px white;
+    background: white;
+    width: 450px;
+    max-width: 90%;
+    height: 500px;
 }
 
-.radio2{
-  margin-top: 138.4px;
-  margin-left: 250px;
+/* heading */
+.heading{
+    position: absolute;
+    top: 80px;
+    color: white;
+    text-align: center;
+}
+
+.heading h1{
+    font-size: 40px;
+}
+
+/* form */
+.contact{
+    position: absolute;
+    top: 160px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.contact form{
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact input[type="text"],
+.contact textarea{
+    margin-bottom: 15px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
 }
 
 .select{
-  margin-left: 50px;
-  margin-top: 20px;
+    margin-top: 10px;
+    color: white;
+    font-size: 18px;
 }
+
+.select div{
+    margin-top: 12px;
+}
+
+.contact button{
+    padding: 12px;
+    background: rgb(172, 39, 233);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 35px;
+    margin-top: 25px;
+    font-size: 17px;
+    transition: 0.3s;
+}
+
+.contact button:hover{
+    background: rgb(31, 208, 221);
+}
+
+/* Mobile Responsive */
+@media(max-width: 768px){
+
+    .box{
+        width: 90%;
+        height: 470px;
+    }
+
+    .heading{
+        top: 50px;
+    }
+
+    .heading h1{
+        font-size: 30px;
+    }
+
+    .contact{
+        top: 120px;
+        padding: 15px;
+    }
+
+    .select{
+        font-size: 16px;
+    }
+
+    .contact button{
+        font-size: 15px;
+    }
+}
+
 </style>
+</head>
 
 <body>
-   
-    <div style="position: relative;" class="image">
-        <img src="./eb2.jpg" width="100%" height="635px" alt="">
 
-        <div style="border: 1px;padding: 200px;position: absolute;top: 0;opacity: 0.3;border-radius: 15px;
-        box-shadow: 2px 2px 10px white;margin-top: 70px;
-        float: left;height: 100px;width: 100px;background: white;" >
-        </div>
+<div class="image">
 
-            <div style="position: absolute;top: 0;margin-top: 100px;display: flex;
-            justify-content: center;" >
-                <h1 style="color: white;">EB BILL</h1>
+    <img src="./eb2.jpg" alt="">
+
+    <div class="box"></div>
+
+    <div class="heading">
+        <h1>EB BILL</h1>
+    </div>
+
+    <div class="contact">
+        <form onsubmit="return submitForm(event)">
+
+            <input type="text" placeholder="Current month reading" required>
+
+            <input type="text" placeholder="Previous month reading" required>
+
+            <div class="select">
+
+                <div>
+                    <input type="radio" name="radioDefault">
+                    <label>Shop</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="radioDefault">
+                    <label>Commercial</label>
+                </div>
+
+                <div>
+                    <input type="radio" name="radioDefault">
+                    <label>House</label>
+                </div>
+
             </div>
-    <div class="contact" style="position: absolute;top: 0;margin-right: 130px;margin-top: 200px;">
-    <form onsubmit="return submitForm(event)">
-    <input type="text" placeholder="Current month reading" required style="width: 150%;margin-right: 20px;">
-    <input type="text" placeholder="previous month reading" required style="width: 150%;margin-top: 30px;">
-    <div class="select">
-    <input type="radio" name="radioDefault">
-    <label for="radioDefault1">
-      Shop
-     </label>
-      <div style="margin-top: 10px;">
-    <input type="radio" name="radioDefault">
-    <label for="radioDefault1">
-      Commerical
-     </label>
-      <div style="margin-top: 10px;">
-    <input type="radio" name="radioDefault">
-    <label for="radioDefault1">
-      House
-     </label>
-    </div>
-    </div>
-    </div>
-    <button type="submit" style="width: 60%;border-radius: 35px;margin-top: 30px;margin-left: 95px;">
-      Calculate Amount</button>
-    </form>
-    </div>
-    </div>
-</body>
 
+            <button type="submit">
+                Calculate Amount
+            </button>
+
+        </form>
+    </div>
+
+</div>
 
 <script>
+
 function submitForm(event){
     event.preventDefault();
 
@@ -156,5 +247,8 @@ function submitForm(event){
 
     return false;
 }
+
 </script>
+
+</body>
 </html>
