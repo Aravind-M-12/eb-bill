@@ -6,6 +6,7 @@
 <title>Aravind</title>
 
 <style>
+
 *{
     margin: 0;
     padding: 0;
@@ -22,31 +23,34 @@ body{
     align-items: center;
     position: relative;
     min-height: 100vh;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .image img{
     width: 100%;
     height: 100vh;
     object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
-/* white box */
+/* BOX */
+
 .box{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.3;
-    border-radius: 15px;
-    box-shadow: 2px 2px 10px white;
-    background: white;
     width: 450px;
     max-width: 90%;
-    height: 500px;
+    min-height: 520px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(3px);
+    box-shadow: 0px 0px 10px white;
 }
 
-/* heading */
+/* HEADING */
+
 .heading{
     position: absolute;
     top: 80px;
@@ -58,7 +62,8 @@ body{
     font-size: 40px;
 }
 
-/* form */
+/* FORM */
+
 .contact{
     position: absolute;
     top: 160px;
@@ -75,14 +80,14 @@ body{
     flex-direction: column;
 }
 
-.contact input[type="text"],
-.contact textarea{
+.contact input[type="text"]{
     margin-bottom: 15px;
     padding: 12px;
     border: none;
     border-radius: 8px;
     width: 100%;
     outline: none;
+    font-size: 16px;
 }
 
 .select{
@@ -111,12 +116,39 @@ body{
     background: rgb(31, 208, 221);
 }
 
-/* Mobile Responsive */
-@media(max-width: 768px){
+/* RESULT */
+
+.result{
+    margin-top: 25px;
+    background: rgba(255,255,255,0.9);
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
+.result h2{
+    margin-bottom: 15px;
+    color: rgb(172, 39, 233);
+    text-align: center;
+    font-size: 22px;
+}
+
+.result p{
+    margin-top: 10px;
+    font-size: 18px;
+    color: black;
+    line-height: 28px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
 
     .box{
         width: 90%;
-        height: 470px;
+        min-height: 560px;
     }
 
     .heading{
@@ -139,6 +171,11 @@ body{
     .contact button{
         font-size: 15px;
     }
+
+    .result p{
+        font-size: 16px;
+    }
+
 }
 
 </style>
@@ -150,13 +187,20 @@ body{
 
     <img src="./eb2.jpg" alt="">
 
+    <!-- BOX -->
+
     <div class="box"></div>
+
+    <!-- HEADING -->
 
     <div class="heading">
         <h1>EB BILL</h1>
     </div>
 
+    <!-- FORM -->
+
     <div class="contact">
+
         <form onsubmit="return submitForm(event)">
 
             <input type="text" placeholder="Current month reading" required>
@@ -186,7 +230,21 @@ body{
                 Calculate Amount
             </button>
 
+            <!-- RESULT -->
+
+            <div class="result" id="resultBox">
+
+                <h2>EB BILL DETAILS</h2>
+
+                <p id="type"></p>
+                <p id="units"></p>
+                <p id="rate"></p>
+                <p id="total"></p>
+
+            </div>
+
         </form>
+
     </div>
 
 </div>
@@ -194,56 +252,98 @@ body{
 <script>
 
 function submitForm(event){
+
     event.preventDefault();
 
-    // get input values
+    // INPUT VALUES
+
     let inputs = document.querySelectorAll(".contact input[type='text']");
+
     let currentReading = parseFloat(inputs[0].value);
+
     let previousReading = parseFloat(inputs[1].value);
 
-    // calculate units
+    // CALCULATE UNITS
+
     let units = currentReading - previousReading;
 
+    // VALIDATION
+
     if(units < 0){
-        alert("Current reading must be greater than previous reading");
+
+        document.getElementById("resultBox").style.display = "block";
+
+        document.getElementById("type").innerHTML = "";
+
+        document.getElementById("units").innerHTML = "";
+
+        document.getElementById("rate").innerHTML = "";
+
+        document.getElementById("total").innerHTML =
+        "Current reading must be greater than previous reading";
+
         return false;
     }
 
-    // get selected radio
+    // RADIO BUTTON
+
     let radios = document.querySelectorAll("input[name='radioDefault']");
+
     let type = "";
 
     if(radios[0].checked){
+
         type = "Shop";
     }
+
     else if(radios[1].checked){
+
         type = "Commercial";
     }
+
     else if(radios[2].checked){
+
         type = "House";
     }
 
-    // rate calculation
+    // RATE
+
     let rate = 0;
 
     if(type === "Shop"){
+
         rate = 8;
     }
+
     else if(type === "Commercial"){
+
         rate = 10;
     }
+
     else if(type === "House"){
+
         rate = 5;
     }
 
+    // TOTAL
+
     let total = units * rate;
 
-    alert(
-        "Type: " + type +
-        "\nUnits Used: " + units +
-        "\nRate: ₹" + rate +
-        "\nTotal EB Bill: ₹" + total
-    );
+    // SHOW RESULT
+
+    document.getElementById("resultBox").style.display = "block";
+
+    document.getElementById("type").innerHTML =
+    "Type : " + type;
+
+    document.getElementById("units").innerHTML =
+    "Units Used : " + units;
+
+    document.getElementById("rate").innerHTML =
+    "Rate : ₹" + rate;
+
+    document.getElementById("total").innerHTML =
+    "Total EB Bill : ₹" + total;
 
     return false;
 }
